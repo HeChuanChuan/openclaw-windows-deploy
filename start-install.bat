@@ -15,7 +15,10 @@ echo.
 :: 切换到脚本所在目录
 cd /d "%~dp0"
 
-:: 运行 PowerShell 脚本
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"%~dp0install-openclaw.ps1\"' -Verb RunAs"
+:: 运行 PowerShell 脚本（带管理员权限）
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"%~dp0install-openclaw.ps1\"' -Verb RunAs -Wait"
 
-exit
+echo.
+echo 安装脚本已完成。
+echo.
+pause
