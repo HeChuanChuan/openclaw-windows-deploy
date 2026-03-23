@@ -17,30 +17,25 @@
 
 ## 使用方法
 
-### 方法一：直接运行（推荐）
+### ⭐ 方法一：双击运行（最简单）
 
-1. 下载 `install-openclaw.ps1`
-2. 右键点击 -> **以管理员身份运行**
-3. 按照提示完成安装
+1. 下载整个项目或 `start-install.bat` 和 `install-openclaw.ps1`
+2. **双击 `start-install.bat`**
+3. 点击「是」允许管理员权限
+4. 等待安装完成
 
-### 方法二：PowerShell 命令行
+### 方法二：PowerShell 运行
+
+1. 右键点击 `install-openclaw.ps1`
+2. 选择 **「使用 PowerShell 运行」**
+3. 点击「是」允许管理员权限
+
+### 方法三：命令行运行
 
 ```powershell
 # 以管理员身份打开 PowerShell
-# 下载并执行脚本
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/YOUR_USERNAME/openclaw-windows-deploy/main/install-openclaw.ps1" -OutFile "install-openclaw.ps1"
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\install-openclaw.ps1
-```
-
-### 方法三：跳过某些步骤
-
-```powershell
-# 跳过 Node.js 安装（已安装时）
-.\install-openclaw.ps1 -SkipNode
-
-# 跳过配置向导
-.\install-openclaw.ps1 -SkipConfig
 ```
 
 ## 安装后
