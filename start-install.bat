@@ -9,8 +9,13 @@ echo ========================================
 echo.
 echo 正在启动 PowerShell 安装脚本...
 echo.
+echo 如果弹出权限请求窗口，请点击"是"
+echo.
 
-:: 以管理员权限运行 PowerShell 脚本
-PowerShell -NoProfile -ExecutionPolicy Bypass -Command "& '%~dp0install-openclaw.ps1'"
+:: 切换到脚本所在目录
+cd /d "%~dp0"
 
-pause
+:: 运行 PowerShell 脚本
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"%~dp0install-openclaw.ps1\"' -Verb RunAs"
+
+exit

@@ -22,7 +22,7 @@ function Write-Warn($message) {
     Write-Host "[!] $message" -ForegroundColor Yellow
 }
 
-function Write-Error($message) {
+function Write-ErrorMsg($message) {
     Write-Host "[X] $message" -ForegroundColor Red
 }
 
@@ -107,7 +107,7 @@ function Install-NodeJS {
             Write-Info "运行 Node.js 安装程序..."
             Start-Process msiexec.exe -ArgumentList "/i `"$nodeMsi`" /qn" -Wait
         } catch {
-            Write-Error "Node.js 安装失败: $_"
+            Write-ErrorMsg "Node.js 安装失败: $_"
             Write-Info "请手动下载安装: https://nodejs.org/"
             Read-Host "按回车键退出"
             exit 1
@@ -146,10 +146,9 @@ function Install-OpenClaw {
     # 验证安装
     $openclawCheck = Get-Command openclaw -ErrorAction SilentlyContinue
     if ($openclawCheck) {
-        $version = openclaw --version 2>&1
         Write-Step "OpenClaw 安装成功"
     } else {
-        Write-Error "OpenClaw 安装失败"
+        Write-ErrorMsg "OpenClaw 安装失败"
         Read-Host "按回车键退出"
         exit 1
     }
@@ -174,14 +173,16 @@ function Create-Shortcut {
     $desktopPath = [Environment]::GetFolderPath("Desktop")
     $batPath = "$desktopPath\Start-OpenClaw.bat"
 
-    $batContent = @"
-@echo off
-title OpenClaw Gateway
-echo Starting OpenClaw Gateway...
-echo.
-openclaw gateway start
-pause
-"@
+    # 使用数组方式创建内容，避免 here-string 缩进问题
+    $batLines = @(
+        "@echo off",
+        "title OpenClaw Gateway",
+        "echo Starting OpenClaw Gateway...",
+        "echo.",
+        "openclaw gateway start",
+        "pause"
+    )
+    $batContent = $batLines -join [Environment]::NewLine
 
     $batContent | Out-File -FilePath $batPath -Encoding ASCII
     Write-Step "桌面快捷方式已创建"
